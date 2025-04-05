@@ -1,11 +1,11 @@
 {
   "name": "Splitt Kalkulator",
-  "short_name": "SplittKalk",
+  "short_name": "Splitt-kalkulator",
   "description": "A calculator for Telenor Splitt payment plans",
   "start_url": "/telenorbutikken/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#007bff",
+  "theme_color": "#ffffff",  /* Changed from #007bff (blue) to #ffffff (white) */
   "icons": [
     {
       "src": "/telenorbutikken/telenorlogo 180x180.png",
