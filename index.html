@@ -8,10 +8,15 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    #content {
+      display: none; /* Hidden by default */
       max-width: 500px;
       margin: 40px auto;
       padding: 20px;
-      background-color: #f4f4f4;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
@@ -79,154 +84,200 @@
       flex: 2;
       min-width: 0;
     }
+    #password-prompt {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+    #password-prompt input {
+      width: 200px;
+      margin: 10px 0;
+    }
+    #password-prompt button {
+      width: 200px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #password-prompt button:hover {
+      background-color: #0056b3;
+    }
   </style>
 </head>
 <body>
-
-  <div class="header-container">
-    <h1>Splitt-kalkulator </h1>
-    <img src="https://www.telenor.no/telenorlogo.svg" alt="Telenor Logo" class="telenor-logo">
-  </div>
-  <p></p>
-  <div class="result" id="result">
-    Fyll inn pris, innbytteverdi og innskudd for å se månedspris.
+  <div id="password-prompt">
+    <h2>Enter Password</h2>
+    <input type="password" id="password-input" placeholder="Password">
+    <button onclick="checkPassword()">Submit</button>
   </div>
 
-  <label for="price">Kontantpris på mobil (kr):</label>
-  <input type="number" id="price" placeholder="F.eks. 9990">
+  <div id="content">
+    <div class="header-container">
+      <h1>Splitt-kalkulator</h1>
+      <img src="https://www.telenor.no/telenorlogo.svg" alt="Telenor Logo" class="telenor-logo">
+    </div>
+    <p></p>
+    <div class="result" id="result">
+      Fyll inn pris, innbytteverdi og innskudd for å se månedspris.
+    </div>
 
-  <label for="tradeinPrice">Innbyttepris og modell:</label>
-  <div class="tradein-container">
-    <input type="number" id="tradeinPrice" placeholder="Innbyttepris (kr)">
-    <select id="tradein">
-      <option value="0">Ca innbyttepriser April 2025 ↓ </option>
-      <option value="7400">iPhone 15 Pro Max</option>
-      <option value="5700">iPhone 15</option>
-      <option value="5700">iPhone 14 Pro Max</option>
-      <option value="4300">iPhone 14 Pro</option>
-      <option value="3900">iPhone 14 Plus</option>
-      <option value="3600">iPhone 14</option>
-      <option value="3600">iPhone 13 Pro</option>
-      <option value="4100">iPhone 13 Pro Max</option>
-      <option value="2700">iPhone 13</option>
-      <option value="2700">iPhone 13 mini</option>
-      <option value="2500">iPhone 12 Pro</option>
-      <option value="2900">iPhone 12 Pro Max</option>
-      <option value="2000">iPhone 12</option>
-      <option value="1500">iPhone 12 mini</option>
-      Physique value="1900">iPhone 11 Pro</option>
-      <option value="2100">iPhone 11 Pro Max</option>
-      <option value="1400">iPhone 11</option>
-      <option value="600">iPhone SE (2nd Gen)</option>
-      <option value="2200">iPhone SE (3rd Gen)</option>
+    <label for="price">Kontantpris på mobil (kr):</label>
+    <input type="number" id="price" placeholder="F.eks. 9990">
 
-      <option value="300">Galaxy A15</option>
-      <option value="800">Galaxy A16</option>
-      <option value="300">Galaxy A22 5G</option>
-      <option value="300">Galaxy A32</option>
-      <option value="1100">Galaxy A34</option>
-      <option value="1300">Galaxy A35</option>
-      <option value="300">Galaxy A33 5G</option>
-      <option value="1300">Galaxy A54</option>
-      <option value="1900">Galaxy A55</option>
-      <option value="400">Galaxy A50</option>
-      <option value="500">Galaxy A51</option>
-      <option value="300">Galaxy A52 5G</option>
-      <option value="700">Galaxy A52s 5G</option>
-      <option value="1000">Galaxy A53 5G</option>
-      <option value="300">Galaxy A71</option>
-      <option value="5700">Galaxy S24 Ultra</option>
-      <option value="4200">Galaxy S24+</option>
-      <option value="2900">Galaxy S23+</option>
-      <option value="2500">Galaxy S23</option>
-      <option value="2800">Galaxy S22 Ultra 5G</option>
-      <option value="1700">Galaxy S22+ 5G</option>
-      <option value="1600">Galaxy S22 5G</option>
-      <option value="1200">Galaxy S21 5G</option>
-      <option value="1100">Galaxy S21 FE 5G</option>
-      <option value="1300">Galaxy S21+ 5G</option>
-      <option value="1800">Galaxy S21 Ultra 5G</option>
-      <option value="1000">Galaxy S20 5G</option>
-      <option value="1000">Galaxy S20 FE 5G</option>
-      <option value="600">Galaxy S10+</option>
-      <option value="600">Galaxy S10</option>
-      <option value="300">Galaxy S10e</option>
-    </select>
-  </div>
+    <label for="tradeinPrice">Innbyttepris og modell:</label>
+    <div class="tradein-container">
+      <input type="number" id="tradeinPrice" placeholder="Innbyttepris (kr)">
+      <select id="tradein">
+        <option value="0">Ca innbyttepriser April 2025 ↓ </option>
+        <option value="7400">iPhone 15 Pro Max</option>
+        <option value="5700">iPhone 15</option>
+        <option value="5700">iPhone 14 Pro Max</option>
+        <option value="4300">iPhone 14 Pro</option>
+        <option value="3900">iPhone 14 Plus</option>
+        <option value="3600">iPhone 14</option>
+        <option value="3600">iPhone 13 Pro</option>
+        <option value="4100">iPhone 13 Pro Max</option>
+        <option value="2700">iPhone 13</option>
+        <option value="2700">iPhone 13 mini</option>
+        <option value="2500">iPhone 12 Pro</option>
+        <option value="2900">iPhone 12 Pro Max</option>
+        <option value="2000">iPhone 12</option>
+        <option value="1500">iPhone 12 mini</option>
+        <option value="1900">iPhone 11 Pro</option>
+        <option value="2100">iPhone 11 Pro Max</option>
+        <option value="1400">iPhone 11</option>
+        <option value="600">iPhone SE (2nd Gen)</option>
+        <option value="2200">iPhone SE (3rd Gen)</option>
+        <option value="300">Galaxy A15</option>
+        <option value="800">Galaxy A16</option>
+        <option value="300">Galaxy A22 5G</option>
+        <option value="300">Galaxy A32</option>
+        <option value="1100">Galaxy A34</option>
+        <option value="1300">Galaxy A35</option>
+        <option value="300">Galaxy A33 5G</option>
+        <option value="1300">Galaxy A54</option>
+        <option value="1900">Galaxy A55</option>
+        <option value="400">Galaxy A50</option>
+        <option value="500">Galaxy A51</option>
+        <option value="300">Galaxy A52 5G</option>
+        <option value="700">Galaxy A52s 5G</option>
+        <option value="1000">Galaxy A53 5G</option>
+        <option value="300">Galaxy A71</option>
+        <option value="5700">Galaxy S24 Ultra</option>
+        <option value="4200">Galaxy S24+</option>
+        <option value="2900">Galaxy S23+</option>
+        <option value="2500">Galaxy S23</option>
+        <option value="2800">Galaxy S22 Ultra 5G</option>
+        <option value="1700">Galaxy S22+ 5G</option>
+        <option value="1600">Galaxy S22 5G</option>
+        <option value="1200">Galaxy S21 5G</option>
+        <option value="1100">Galaxy S21 FE 5G</option>
+        <option value="1300">Galaxy S21+ 5G</option>
+        <option value="1800">Galaxy S21 Ultra 5G</option>
+        <option value="1000">Galaxy S20 5G</option>
+        <option value="1000">Galaxy S20 FE 5G</option>
+        <option value="600">Galaxy S10+</option>
+        <option value="600">Galaxy S10</option>
+        <option value="300">Galaxy S10e</option>
+      </select>
+    </div>
 
-  <label for="deposit">Startinnskudd (kr):</label>
-  <input type="number" id="deposit" placeholder="F.eks. 2990">
+    <label for="deposit">Startinnskudd (kr):</label>
+    <input type="number" id="deposit" placeholder="F.eks. 2990">
 
-  <div class="button-container">
-    <button id="36months" class="active">36 mnd</button>
-    <button id="24months">24 mnd</button>
+    <div class="button-container">
+      <button id="36months" class="active">36 mnd</button>
+      <button id="24months">24 mnd</button>
+    </div>
   </div>
 
   <script>
-    const priceInput = document.getElementById('price');
-    const depositInput = document.getElementById('deposit');
-    const tradeinSelect = document.getElementById('tradein');
-    const tradeinPriceInput = document.getElementById('tradeinPrice');
-    const resultDiv = document.getElementById('result');
-    const months24Button = document.getElementById('24months');
-    const months36Button = document.getElementById('36months');
-
-    let months = 36;
-
-    function calculate() {
-      const price = parseFloat(priceInput.value) || 0;
-      const deposit = parseFloat(depositInput.value) || 0;
-      const tradein = parseFloat(tradeinPriceInput.value) || 0;
-
-      const totalReduction = deposit + tradein;
-      const toPay = price - totalReduction;
-      let monthly = Math.ceil(toPay / months);
-
-      // Vis 0 kr hvis månedsprisen blir negativ
-      if (monthly < 0) {
-        monthly = 0;
+    function checkPassword() {
+      const password = document.getElementById('password-input').value;
+      if (password === 'tnb') {
+        document.getElementById('password-prompt').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+        initializeCalculator(); // Initialize calculator after content is shown
+      } else {
+        alert('Incorrect password. Try again.');
       }
-
-      resultDiv.innerHTML = `Månedspris: ${monthly} kr/mnd`;
     }
 
-    priceInput.addEventListener('input', calculate);
-    depositInput.addEventListener('input', calculate);
-    tradeinPriceInput.addEventListener('input', calculate);
-    tradeinSelect.addEventListener('change', function() {
-      tradeinPriceInput.value = tradeinSelect.value;
-      calculate();
+    // Allow Enter key to submit password
+    document.getElementById('password-input').addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        checkPassword();
+      }
     });
 
-    months24Button.addEventListener('click', function () {
-      months = 24;
-      months24Button.classList.add('active');
-      months36Button.classList.remove('active');
-      calculate();
-    });
+    function initializeCalculator() {
+      const priceInput = document.getElementById('price');
+      const depositInput = document.getElementById('deposit');
+      const tradeinSelect = document.getElementById('tradein');
+      const tradeinPriceInput = document.getElementById('tradeinPrice');
+      const resultDiv = document.getElementById('result');
+      const months24Button = document.getElementById('24months');
+      const months36Button = document.getElementById('36months');
 
-    months36Button.addEventListener('click', function () {
-      months = 36;
-      months36Button.classList.add('active');
-      months24Button.classList.remove('active');
-      calculate();
-    });
+      let months = 36;
 
-    calculate();
+      function calculate() {
+        const price = parseFloat(priceInput.value) || 0;
+        const deposit = parseFloat(depositInput.value) || 0;
+        const tradein = parseFloat(tradeinPriceInput.value) || 0;
+
+        const totalReduction = deposit + tradein;
+        const toPay = price - totalReduction;
+        let monthly = Math.ceil(toPay / months);
+
+        if (monthly < 0) {
+          monthly = 0;
+        }
+
+        resultDiv.innerHTML = `Månedspris: ${monthly} kr/mnd`;
+      }
+
+      priceInput.addEventListener('input', calculate);
+      depositInput.addEventListener('input', calculate);
+      tradeinPriceInput.addEventListener('input', calculate);
+      tradeinSelect.addEventListener('change', function() {
+        tradeinPriceInput.value = tradeinSelect.value;
+        calculate();
+      });
+
+      months24Button.addEventListener('click', function () {
+        months = 24;
+        months24Button.classList.add('active');
+        months36Button.classList.remove('active');
+        calculate();
+      });
+
+      months36Button.addEventListener('click', function () {
+        months = 36;
+        months36Button.classList.add('active');
+        months24Button.classList.remove('active');
+        calculate();
+      });
+
+      calculate();
+    }
+
+    // Service Worker registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/telenorbutikken/sw.js')
+          .then(registration => {
+            console.log('Service Worker registered with scope:', registration.scope);
+          })
+          .catch(error => {
+            console.log('Service Worker registration failed:', error);
+          });
+      });
+    }
   </script>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/telenorbutikken/sw.js')
-        .then(registration => {
-          console.log('Service Worker registered with scope:', registration.scope);
-        })
-        .catch(error => {
-          console.log('Service Worker registration failed:', error);
-        });
-    });
-  }
-</script>
-  
 </body>
 </html>
