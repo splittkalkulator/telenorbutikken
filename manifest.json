@@ -1,6 +1,6 @@
 {
   "name": "Splitt-kalkulator",
-  "short_name": "Splitt",
+  "short_name": "Splitt-kalkulator",
   "start_url": "/telenorbutikken/",
   "display": "standalone",
   "background_color": "#F7F9FA",
