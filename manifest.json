@@ -1,24 +1,18 @@
 {
-  "name": "Splitt Kalkulator",
-  "short_name": "Splitt-kalkulator",
-  "description": "A calculator for Telenor Splitt payment plans",
+  "name": "Splitt-kalkulator",
+  "short_name": "Splitt",
   "start_url": "/telenorbutikken/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",  /* Changed from #007bff (blue) to #ffffff (white) */
+  "background_color": "#F7F9FA",
+  "theme_color": "#00A5D4",
   "icons": [
     {
-      "src": "/telenorbutikken/telenorlogo 180x180.png",
-      "sizes": "180x180",
-      "type": "image/png"
-    },
-    {
-      "src": "/telenorbutikken/telenorlogo 192x192.png",
+      "src": "/telenorbutikken/icon.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/telenorbutikken/telenorlogo 512x512.png",
+      "src": "/telenorbutikken/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
