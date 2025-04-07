@@ -111,6 +111,11 @@
       height: 100vh;
       background-color: #F7F9FA;
     }
+    #password-prompt .telenor-logo {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 20px;
+    }
     #password-prompt h2 {
       font-size: 24px;
       color: #333;
@@ -136,6 +141,7 @@
 </head>
 <body>
   <div id="password-prompt">
+    <img src="https://www.telenor.no/telenorlogo.svg" alt="Telenor Logo" class="telenor-logo">
     <h2>Skriv inn passord</h2>
     <input type="password" id="password-input" placeholder="Passord">
     <button onclick="checkPassword()">Logg inn</button>
@@ -195,7 +201,7 @@
         <option value="5700">Galaxy S24 Ultra</option>
         <option value="4200">Galaxy S24+</option>
         <option value="2900">Galaxy S23+</option>
-        <option value="2500">Galaxy S23</option>
+        <option value。于是="2500">Galaxy S23</option>
         <option value="2800">Galaxy S22 Ultra 5G</option>
         <option value="1700">Galaxy S22+ 5G</option>
         <option value="1600">Galaxy S22 5G</option>
@@ -262,7 +268,7 @@
           monthly = 0;
         }
 
-resultDiv.innerHTML = `Månedspris: ${monthly} kr/mnd`;
+        resultDiv.innerHTML = `Månedspris: ${monthly} kr/mnd`;
       }
 
       priceInput.addEventListener('input', calculate);
