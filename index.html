@@ -15,7 +15,7 @@
       line-height: 1.6;
     }
     #content {
-      display: none; /* Hidden by default */
+      display: none;
       max-width: 600px;
       margin: 40px auto;
       padding: 30px;
@@ -48,10 +48,17 @@
       color: #00A5D4;
       font-weight: 600;
     }
+    .daily-price {
+      font-size: 16px;
+      color: #333333;
+      font-weight: 400;
+      display: block;
+      margin-top: 8px;
+    }
     .header-container {
       display: flex;
       align-items: center;
-      justify-content: center; /* Changed to center the logo */
+      justify-content: center;
       margin-bottom: 20px;
     }
     .telenor-logo {
@@ -146,7 +153,8 @@
       <img src="https://www.telenor.no/telenorlogo.svg" alt="Telenor Logo" class="telenor-logo">
     </div>
     <div class="result" id="result">
-      Fyll inn pris, innbytteverdi og innskudd for å se månedspris.
+      <span id="monthlyPrice">Fyll inn pris, innbytteverdi og innskudd for å se månedspris.</span>
+      <span class="daily-price" id="dailyPrice"></span>
     </div>
 
     <label for="price">Kontantpris på mobil (kr):</label>
@@ -258,7 +266,8 @@
       const depositInput = document.getElementById('deposit');
       const tradeinSelect = document.getElementById('tradein');
       const tradeinPriceInput = document.getElementById('tradeinPrice');
-      const resultDiv = document.getElementById('result');
+      const monthlyPriceSpan = document.getElementById('monthlyPrice');
+      const dailyPriceSpan = document.getElementById('dailyPrice');
       const months24Button = document.getElementById('24months');
       const months36Button = document.getElementById('36months');
 
@@ -269,6 +278,12 @@
         const deposit = parseFloat(depositInput.value) || 0;
         const tradein = parseFloat(tradeinPriceInput.value) || 0;
 
+        if (price === 0 && deposit === 0 && tradein === 0) {
+          monthlyPriceSpan.innerHTML = `Fyll inn pris, innbytteverdi og innskudd for å se månedspris.`;
+          dailyPriceSpan.innerHTML = '';
+          return;
+        }
+
         const totalReduction = deposit + tradein;
         const toPay = price - totalReduction;
         let monthly = Math.ceil(toPay / months);
@@ -277,7 +292,9 @@
           monthly = 0;
         }
 
-        resultDiv.innerHTML = `Månedspris: ${monthly} kr/mnd`;
+        const daily = (monthly / 30.42).toFixed(2);
+        monthlyPriceSpan.innerHTML = `Månedspris: ${monthly} kr/mnd`;
+        dailyPriceSpan.innerHTML = `Tilsvarer ${daily} kr/dag`;
       }
 
       priceInput.addEventListener('input', calculate);
