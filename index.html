@@ -292,9 +292,9 @@
           monthly = 0;
         }
 
-        const daily = (monthly / 30.42).toFixed(2);
+        const daily = Math.ceil(monthly / 30.42);
         monthlyPriceSpan.innerHTML = `Månedspris: ${monthly} kr/mnd`;
-        dailyPriceSpan.innerHTML = `Tilsvarer ${daily} kr/dag`;
+        dailyPriceSpan.innerHTML = `Tilsvarer ca ${daily} kr/dag`;
       }
 
       priceInput.addEventListener('input', calculate);
