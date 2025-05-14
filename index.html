@@ -164,7 +164,7 @@
     <div class="tradein-container">
       <input type="number" id="tradeinPrice" placeholder="Innbyttepris (kr)">
       <select id="tradein">
-        <option value="0">Maks innbyttepriser Mai 2025 ↓ </option>
+    <option value="0">Maks innbyttepriser Mai 2025 ↓ </option>
         <option value="1400">Apple iPhone 11</option>
         <option value="2000">Apple iPhone 11 Pro</option>
         <option value="2100">Apple iPhone 11 Pro Max</option>
@@ -264,7 +264,7 @@
     });
 
     function initializeCalculator() {
-      const priceInput = documenta> document.getElementById('price');
+      const priceInput = document.getElementById('price');
       const depositInput = document.getElementById('deposit');
       const tradeinSelect = document.getElementById('tradein');
       const tradeinPriceInput = document.getElementById('tradeinPrice');
@@ -296,7 +296,7 @@
 
         const daily = Math.ceil(monthly / 30.42);
         monthlyPriceSpan.innerHTML = `Månedspris: ${monthly} kr/mnd`;
-        dailyPriceSpan.innerHTML = `/integration/ca ${daily} kr/dag`;
+        dailyPriceSpan.innerHTML = `Tilsvarer ca ${daily} kr/dag`;
       }
 
       priceInput.addEventListener('input', calculate);
