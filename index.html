@@ -155,6 +155,7 @@
     <div class="result" id="result">
       <span id="monthlyPrice">Fyll inn pris, innbytteverdi og innskudd for å se månedspris.</span>
       <span class="daily-price" id="dailyPrice"></span>
+      <span class="daily-price" id="totalPrice"></span>
     </div>
 
     <label for="price">Kontantpris på mobil (kr):</label>
@@ -164,7 +165,7 @@
     <div class="tradein-container">
       <input type="number" id="tradeinPrice" placeholder="Innbyttepris (kr)">
       <select id="tradein">
-    <option value="0">Maks innbyttepriser Mai 2025 ↓ </option>
+        <option value="0">Maks innbyttepriser Mai 2025 ↓ </option>
         <option value="1400">Apple iPhone 11</option>
         <option value="2000">Apple iPhone 11 Pro</option>
         <option value="2100">Apple iPhone 11 Pro Max</option>
@@ -270,6 +271,7 @@
       const tradeinPriceInput = document.getElementById('tradeinPrice');
       const monthlyPriceSpan = document.getElementById('monthlyPrice');
       const dailyPriceSpan = document.getElementById('dailyPrice');
+      const totalPriceSpan = document.getElementById('totalPrice');
       const months24Button = document.getElementById('24months');
       const months36Button = document.getElementById('36months');
 
@@ -283,12 +285,14 @@
         if (price === 0 && deposit === 0 && tradein === 0) {
           monthlyPriceSpan.innerHTML = `Fyll inn pris, innbytteverdi og innskudd for å se månedspris.`;
           dailyPriceSpan.innerHTML = '';
+          totalPriceSpan.innerHTML = '';
           return;
         }
 
         const totalReduction = deposit + tradein;
         const toPay = price - totalReduction;
         let monthly = Math.ceil(toPay / months);
+        const totalPrice = toPay;
 
         if (monthly < 0) {
           monthly = 0;
@@ -297,6 +301,7 @@
         const daily = Math.ceil(monthly / 30.42);
         monthlyPriceSpan.innerHTML = `Månedspris: ${monthly} kr/mnd`;
         dailyPriceSpan.innerHTML = `Tilsvarer ca ${daily} kr/dag`;
+        totalPriceSpan.innerHTML = `Totalpris over ${months} mnd: ${totalPrice} kr`;
       }
 
       priceInput.addEventListener('input', calculate);
