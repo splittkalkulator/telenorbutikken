@@ -246,100 +246,111 @@
     </div>
   </div>
 
-  <script>
-    function checkPassword() {
-      const password = document.getElementById('password-input').value;
-      if (password === 'tnb') {
-        document.getElementById('password-prompt').style.display = 'none';
-        document.getElementById('content').style.display = 'block';
-        initializeCalculator();
-      } else {
-        alert('Feil passord. Prøv igjen.');
+ <script>
+  function checkPassword() {
+    const password = document.getElementById('password-input').value;
+    if (password === 'tnb') {
+      document.getElementById('password-prompt').style.display = 'none';
+      document.getElementById('content').style.display = 'block';
+      initializeCalculator();
+    } else {
+      alert('Feil passord. Prøv igjen.');
+    }
+  }
+
+  document.getElementById('password-input').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+      checkPassword();
+    }
+  });
+
+  function initializeCalculator() {
+    const priceInput = document.getElementById('price');
+    const depositInput = document.getElementById('deposit');
+    const tradeinSelect = document.getElementById('tradein');
+    const tradeinPriceInput = document.getElementById('tradeinPrice');
+    const monthlyPriceSpan = document.getElementById('monthlyPrice');
+    const dailyPriceSpan = document.getElementById('dailyPrice');
+    const months24Button = document.getElementById('24months');
+    const months36Button = document.getElementById('36months');
+
+    let months = 36;
+
+    function calculate() {
+      const price = parseFloat(priceInput.value) || 0;
+      const deposit = parseFloat(depositInput.value) || 0;
+      const tradein = parseFloat(tradeinPriceInput.value) || 0;
+
+      if (price === 0 && deposit === 0 && tradein === 0) {
+        monthlyPriceSpan.innerHTML = `Fyll inn pris, innbytteverdi og innskudd for å se månedspris.`;
+        dailyPriceSpan.innerHTML = '';
+        return;
       }
+
+      const totalReduction = deposit + tradein;
+      const toPay = price - totalReduction;
+      let monthly = Math.ceil(toPay / months);
+
+      if (monthly < 0) {
+        monthly = 0;
+      }
+
+      const daily = (monthly / 30.42).toFixed(2);
+      monthlyPriceSpan.innerHTML = `Månedspris: ${monthly} kr/mnd`;
+      dailyPriceSpan.innerHTML = `Tilsvarer ${daily} kr/dag`;
     }
 
-    document.getElementById('password-input').addEventListener('keypress', function(event) {
-      if (event.key === 'Enter') {
-        checkPassword();
-      }
+    priceInput.addEventListener('input', calculate);
+    depositInput.addEventListener('input', calculate);
+    tradeinPriceInput.addEventListener('input', calculate);
+    tradeinSelect.addEventListener('change', function() {
+      tradeinPriceInput.value = tradeinSelect.value;
+      calculate();
     });
 
-    function initializeCalculator() {
-      const priceInput = document.getElementById('price');
-      const depositInput = document.getElementById('deposit');
-      const tradeinSelect = document.getElementById('tradein');
-      const tradeinPriceInput = document.getElementById('tradeinPrice');
-      const monthlyPriceSpan = document.getElementById('monthlyPrice');
-      const dailyPriceSpan = document.getElementById('dailyPrice');
-      const totalPriceSpan = document.getElementById('totalPrice');
-      const months24Button = document.getElementById('24months');
-      const months36Button = document.getElementById('36months');
-
-      let months = 36;
-
-      function calculate() {
-        const price = parseFloat(priceInput.value) || 0;
-        const deposit = parseFloat(depositInput.value) || 0;
-        const tradein = parseFloat(tradeinPriceInput.value) || 0;
-
-        if (price === 0 && deposit === 0 && tradein === 0) {
-          monthlyPriceSpan.innerHTML = `Fyll inn pris, innbytteverdi og innskudd for å se månedspris.`;
-          dailyPriceSpan.innerHTML = '';
-          totalPriceSpan.innerHTML = '';
-          return;
-        }
-
-        const totalReduction = deposit + tradein;
-        const toPay = price - totalReduction;
-        let monthly = Math.ceil(toPay / months);
-        const totalPrice = toPay;
-
-        if (monthly < 0) {
-          monthly = 0;
-        }
-
-        const daily = Math.ceil(monthly / 30.42);
-        monthlyPriceSpan.innerHTML = `Månedspris: ${monthly} kr/mnd`;
-        dailyPriceSpan.innerHTML = `Tilsvarer ca ${daily} kr/dag`;
-        totalPriceSpan.innerHTML = `Totalpris over ${months} mnd: ${totalPrice} kr`;
-      }
-
-      priceInput.addEventListener('input', calculate);
-      depositInput.addEventListener('input', calculate);
-      tradeinPriceInput.addEventListener('input', calculate);
-      tradeinSelect.addEventListener('change', function() {
-        tradeinPriceInput.value = tradeinSelect.value;
-        calculate();
-      });
-
-      months24Button.addEventListener('click', function () {
-        months = 24;
-        months24Button.classList.add('active');
-        months36Button.classList.remove('active');
-        calculate();
-      });
-
-      months36Button.addEventListener('click', function () {
-        months = 36;
-        months36Button.classList.add('active');
-        months24Button.classList.remove('active');
-        calculate();
-      });
-
+    months24Button.addEventListener('click', function () {
+      months = 24;
+      months24Button.classList.add('active');
+      months36Button.classList.remove('active');
       calculate();
-    }
+    });
 
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/telenorbutikken/sw.js')
-          .then(registration => {
-            console.log('Service Worker registered with scope:', registration.scope);
-          })
-          .catch(error => {
-            console.log('Service Worker registration failed:', error);
+    months36Button.addEventListener('click', function () {
+      months = 36;
+      months36Button.classList.add('active');
+      months24Button.classList.remove('active');
+      calculate();
+    });
+
+    calculate();
+  }
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/telenorbutikken/sw.js?v=20250602')
+        .then(registration => {
+          console.log('Service Worker registered with scope:', registration.scope);
+          // Sjekk for oppdateringer ved lasting
+          registration.update();
+          // Lytt etter oppdateringer
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                // Ny versjon funnet, tving oppdatering
+                newWorker.postMessage({ type: 'UPDATE' });
+                // Varsle brukeren
+                alert('En ny versjon er tilgjengelig! Siden oppdateres.');
+                window.location.reload(true); // Tvinger reload fra server
+              }
+            });
           });
-      });
-    }
-  </script>
+        })
+        .catch(error => {
+          console.log('Service Worker registration failed:', error);
+        });
+    });
+  }
+</script>
 </body>
 </html>
